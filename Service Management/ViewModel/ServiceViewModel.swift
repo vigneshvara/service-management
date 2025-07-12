@@ -41,4 +41,11 @@ class ServiceViewModel: ObservableObject {
             self.services = SampleData.generateServices()
         }
     }
+    
+    func refreshServices() {
+        services.removeAll()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.services = SampleData.generateServices()
+        }
+    }
 }

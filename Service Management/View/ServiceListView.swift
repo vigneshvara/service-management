@@ -15,7 +15,10 @@ struct ServiceListView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                if !viewModel.searchText.isEmpty && viewModel.filteredServices.isEmpty {
+                if viewModel.services.isEmpty {
+                    ProgressView()
+                        .tint(.blue)
+                } else if !viewModel.searchText.isEmpty && viewModel.filteredServices.isEmpty {
                     Image(systemName: "questionmark.text.page")
                         .resizable()
                         .frame(width: 100, height: 130)
@@ -43,6 +46,9 @@ struct ServiceListView: View {
             })
             .searchable(text: $viewModel.searchText)
             .toolbarBackground(.white, for: .navigationBar)
+            .refreshable(action: {
+                viewModel.refreshServices()
+            })
         }
     }
 }
